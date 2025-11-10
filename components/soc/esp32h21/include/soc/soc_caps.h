@@ -42,7 +42,7 @@
 #define SOC_EFUSE_SUPPORTED             1       //TODO: [ESP32H21] IDF-11507
 #define SOC_RTC_FAST_MEM_SUPPORTED      1
 #define SOC_RTC_MEM_SUPPORTED           1       //TODO: [ESP32H21] IDF-11548
-// #define SOC_I2S_SUPPORTED               1    //TODO: [ESP32H21] IDF-11606, IDF-11608
+#define SOC_I2S_SUPPORTED               1
 // #define SOC_SDM_SUPPORTED               1    //TODO: [ESP32H21] IDF-11573
 #define SOC_GPSPI_SUPPORTED             1
 #define SOC_LEDC_SUPPORTED              1
@@ -187,8 +187,6 @@
 
 /*-------------------------- GDMA CAPS -------------------------------------*/
 #define SOC_AHB_GDMA_VERSION                1U
-#define SOC_GDMA_NUM_GROUPS_MAX             1U
-#define SOC_GDMA_PAIRS_PER_GROUP_MAX        3
 // #define SOC_GDMA_SUPPORT_ETM                1  // Support ETM submodule TODO: IDF-11604
 #define SOC_GDMA_SUPPORT_SLEEP_RETENTION    1
 
@@ -270,18 +268,13 @@
 // #define SOC_I2C_SUPPORT_SLEEP_RETENTION           (1)
 
 /*-------------------------- I2S CAPS ----------------------------------------*/
-// #define SOC_I2S_NUM                 (1U)
-// #define SOC_I2S_HW_VERSION_2        (1)
-// // #define SOC_I2S_SUPPORTS_ETM        (1)
-// #define SOC_I2S_SUPPORTS_XTAL       (1)
-// #define SOC_I2S_SUPPORTS_PLL_F96M   (1)
-// #define SOC_I2S_SUPPORTS_PLL_F64M   (1)
-// #define SOC_I2S_SUPPORTS_PCM        (1)
-// #define SOC_I2S_SUPPORTS_PDM        (1)
-// #define SOC_I2S_SUPPORTS_PDM_TX     (1)
-// #define SOC_I2S_PDM_MAX_TX_LINES    (2)
-// #define SOC_I2S_SUPPORTS_TDM        (1)
-// #define SOC_I2S_TDM_FULL_DATA_WIDTH (1)  /*!< No limitation to data bit width when using multiple slots */
+#define SOC_I2S_HW_VERSION_2        (1)
+#define SOC_I2S_SUPPORTS_ETM        (1)
+#define SOC_I2S_SUPPORTS_PCM        (1)
+#define SOC_I2S_SUPPORTS_PDM        (1)
+#define SOC_I2S_SUPPORTS_PDM_TX     (1)
+#define SOC_I2S_PDM_MAX_TX_LINES    (2)
+#define SOC_I2S_SUPPORTS_TDM        (1)
 
 /*-------------------------- LEDC CAPS ---------------------------------------*/
 #define SOC_LEDC_SUPPORT_PLL_DIV_CLOCK      (1)
@@ -294,6 +287,7 @@
 #define SOC_LEDC_GAMMA_CURVE_FADE_RANGE_MAX (16)
 #define SOC_LEDC_FADE_PARAMS_BIT_WIDTH      (10)
 #define SOC_LEDC_SUPPORT_SLEEP_RETENTION    (1)
+#define SOC_LEDC_SUPPORT_ETM                (1)
 
 /*-------------------------- MPU CAPS ----------------------------------------*/
 // #define SOC_MPU_CONFIGURABLE_REGIONS_SUPPORTED    0

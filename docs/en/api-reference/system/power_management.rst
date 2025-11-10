@@ -55,7 +55,7 @@ Dynamic frequency scaling (DFS) and automatic Light-sleep can be enabled in an a
 
 Power Management Locks
 ----------------------
-{IDF_TARGET_MAX_CPU_FREQ: default="Not updated yet", esp32="80 MHz, 160 MHz, or 240 MHz", esp32s2="80 MHz, 160 MHz, or 240 MHz", esp32s3="80 MHz, 160 MHz, or 240 MHz", esp32c2="80 MHz or 120 MHz", esp32c3="80 MHz or 160 MHz", esp32c6="80 MHz or 160 MHz", esp32p4="360 MHz", esp32c5="80 MHz, 160 MHz or 240 MHz"}
+{IDF_TARGET_MAX_CPU_FREQ: default="Not updated yet", esp32="80 MHz, 160 MHz, or 240 MHz", esp32s2="80 MHz, 160 MHz, or 240 MHz", esp32s3="80 MHz, 160 MHz, or 240 MHz", esp32c2="80 MHz or 120 MHz", esp32c3="80 MHz or 160 MHz", esp32c6="80 MHz or 160 MHz", esp32p4="360 MHz", esp32c5="80 MHz, 160 MHz or 240 MHz", esp32c61="80 MHz or 160 MHz"}
 
 Applications have the ability to acquire/release locks in order to control the power management algorithm. When an application acquires a lock, the power management algorithm operation is restricted in a way described below. When the lock is released, such restrictions are removed.
 
@@ -116,7 +116,7 @@ The following drivers hold the ``ESP_PM_APB_FREQ_MAX`` lock while the driver is 
     - **Ethernet**: between calls to :cpp:func:`esp_eth_driver_install` and :cpp:func:`esp_eth_driver_uninstall`.
     :SOC_WIFI_SUPPORTED: - **WiFi**: between calls to :cpp:func:`esp_wifi_start` and :cpp:func:`esp_wifi_stop`. If modem sleep is enabled, the lock will be released for the periods of time when radio is disabled.
     :SOC_TWAI_SUPPORTED: - **TWAI**: between calls to :cpp:func:`twai_driver_install` and :cpp:func:`twai_driver_uninstall` (only when the clock source is set to :cpp:enumerator:`TWAI_CLK_SRC_APB`).
-    :SOC_BT_SUPPORTED and esp32: - **Bluetooth**: between calls to :cpp:func:`esp_bt_controller_enable` and :cpp:func:`esp_bt_controller_disable`. If Bluetooth Modem-sleep is enabled, the ``ESP_PM_APB_FREQ_MAX`` lock will be released for the periods of time when radio is disabled. However the ``ESP_PM_NO_LIGHT_SLEEP`` lock will still be held, unless :ref:`CONFIG_BTDM_CTRL_LOW_POWER_CLOCK` option is set to "External 32kHz crystal".
+    :SOC_BT_SUPPORTED and esp32: - **Bluetooth**: between calls to :cpp:func:`esp_bt_controller_enable` and :cpp:func:`esp_bt_controller_disable`. If Bluetooth Modem-sleep is enabled, the ``ESP_PM_APB_FREQ_MAX`` lock will be released for the periods of time when radio is disabled. However the ``ESP_PM_NO_LIGHT_SLEEP`` lock will still be held, unless :ref:`CONFIG_BTDM_CTRL_LOW_POWER_CLOCK` option is set to "External 32 kHz crystal".
     :SOC_BT_SUPPORTED and not esp32: - **Bluetooth**: between calls to :cpp:func:`esp_bt_controller_enable` and :cpp:func:`esp_bt_controller_disable`. If Bluetooth Modem-sleep is enabled, the ``ESP_PM_APB_FREQ_MAX`` lock will be released for the periods of time when radio is disabled. However the ``ESP_PM_NO_LIGHT_SLEEP`` lock will still be held.
     :SOC_PCNT_SUPPORTED: - **PCNT**: between calls to :cpp:func:`pcnt_unit_enable` and :cpp:func:`pcnt_unit_disable`.
     :SOC_SDM_SUPPORTED: - **Sigma-delta**: between calls to :cpp:func:`sdm_channel_enable` and :cpp:func:`sdm_channel_disable`.

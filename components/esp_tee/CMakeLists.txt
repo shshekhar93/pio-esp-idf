@@ -28,6 +28,10 @@ else()
             endif()
             add_dependencies(esp_tee partition_table_bin)
             add_dependencies(flash esp_tee)
+            if(CONFIG_SECURE_FLASH_ENCRYPTION_MODE_DEVELOPMENT)
+                # Also add ESP-TEE binary as a dependency to the encrypted-flash target
+                add_dependencies(encrypted-flash esp_tee)
+            endif()
             set(image_file ${TEE_BUILD_DIR}/esp_tee.bin)
             partition_table_get_partition_info(offset "--partition-name ${partition}" "offset")
             esptool_py_flash_target_image(flash "${partition}" "${offset}" "${image_file}")
@@ -76,7 +80,7 @@ else()
 
     idf_component_register(INCLUDE_DIRS include
                            SRCS ${srcs}
-                           PRIV_REQUIRES efuse esp_security esp_system spi_flash esptool_py)
+                           PRIV_REQUIRES efuse esp_security esp_system esp_stdio spi_flash esptool_py esp_hal_wdt)
 
     if(CONFIG_SECURE_ENABLE_TEE)
         set(EXTRA_LINK_FLAGS)

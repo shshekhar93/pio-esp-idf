@@ -105,7 +105,7 @@ static esp_err_t rmt_tx_init_dma_link(rmt_tx_channel_t *tx_channel, const rmt_tx
                 // each node can generate the DMA eof interrupt, and the driver will do a ping-pong trick in the eof callback
                 .mark_eof = true,
                 // chain the descriptors into a ring, and will break it in `rmt_encode_eof()`
-                .mark_final = false,
+                .mark_final = GDMA_FINAL_LINK_TO_DEFAULT,
             }
         };
     }
@@ -833,7 +833,7 @@ static esp_err_t rmt_tx_disable(rmt_channel_handle_t channel)
 #if !SOC_RMT_SUPPORT_ASYNC_STOP
         // we do a trick to stop the undergoing transmission
         // stop interrupt, insert EOF marker to the RMT memory, polling the trans_done event
-        channel->hw_mem_base[0].val = 0;
+        memset(channel->hw_mem_base, 0, channel->mem_block_num * SOC_RMT_MEM_WORDS_PER_CHANNEL * sizeof(rmt_symbol_word_t));
         while (!(rmt_ll_tx_get_interrupt_status_raw(hal->regs, channel_id) & RMT_LL_EVENT_TX_DONE(channel_id))) {}
 #endif
         rmt_ll_clear_interrupt_status(hal->regs, RMT_LL_EVENT_TX_MASK(channel_id));
