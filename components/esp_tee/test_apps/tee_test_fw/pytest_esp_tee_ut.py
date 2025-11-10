@@ -9,8 +9,7 @@ from pytest_embedded_idf.utils import idf_parametrize
 
 # ---------------- Pytest build parameters ----------------
 
-# TODO: Enable for ESP32-C5 once support is stable
-SUPPORTED_TARGETS = ['esp32c6', 'esp32h2']
+SUPPORTED_TARGETS = ['esp32c6', 'esp32h2', 'esp32c5']
 
 CONFIG_DEFAULT = [
     # 'config, target, markers',
@@ -51,6 +50,7 @@ REE_ISOLATION_TEST_EXC_RSN: dict[str, str] = {
     ('IROM-W1'): 'Store access fault',
     ('DROM-R1'): 'Load access fault',
     ('DROM-W1'): 'Store access fault',
+    ('MMU-spillover'): 'Cache error',
 }
 
 TEE_APM_VIOLATION_EXC_CHK = ['eFuse', 'MMU', 'AES', 'HMAC', 'DS', 'SHA PCR', 'ECC PCR', 'SWDT/BOD']
@@ -166,7 +166,12 @@ def test_esp_tee_isolation_checks(dut: IdfDut) -> None:
             continue
         dut.expect_exact('Press ENTER to see the list of tests')
         dut.write(f'"Test REE-TEE isolation: {test}"')
-        actual_exc = dut.expect(r'Core ([01]) panic\'ed \(([^)]+)\)', timeout=30).group(2).decode()
+        # NOTE: For ESP32-C5, the MMU-spillover test fails gracefully without raising panic
+        if dut.target == 'esp32c5' and test == 'MMU-spillover':
+            dut.expect_exact('Failed MMU operation, rebooting!')
+            continue
+        else:
+            actual_exc = dut.expect(r'Core ([01]) panic\'ed \(([^)]+)\)', timeout=30).group(2).decode()
         if actual_exc != expected_exc:
             raise RuntimeError('Incorrect exception received!')
         dut.expect('Origin: U-mode')

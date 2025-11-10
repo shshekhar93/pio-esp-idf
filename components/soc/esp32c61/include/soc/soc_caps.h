@@ -149,16 +149,15 @@
 
 #define SOC_CPU_HAS_LOCKUP_RESET        1
 
+#define SOC_CPU_ZCMP_WORKAROUND         1
+
 /*-------------------------- DMA Common CAPS ----------------------------------------*/
 #define SOC_DMA_CAN_ACCESS_FLASH 1 /*!< DMA can access Flash memory */
 
 /*-------------------------- GDMA CAPS -------------------------------------*/
 #define SOC_AHB_GDMA_VERSION            2U
-#define SOC_GDMA_NUM_GROUPS_MAX         1U
-#define SOC_GDMA_PAIRS_PER_GROUP_MAX    2
 #define SOC_GDMA_SUPPORT_ETM            1  // Support ETM submodule
 #define SOC_GDMA_SUPPORT_SLEEP_RETENTION    1
-#define SOC_AHB_GDMA_SUPPORT_PSRAM 1
 #define SOC_GDMA_SUPPORT_WEIGHTED_ARBITRATION   1
 
 /*-------------------------- ETM CAPS -----------------------------------*/
@@ -242,12 +241,8 @@
 #define SOC_I2C_SUPPORT_SLEEP_RETENTION        (1)
 
 // /*-------------------------- I2S CAPS ----------------------------------------*/
-#define SOC_I2S_NUM                     (1U)
 #define SOC_I2S_HW_VERSION_2            (1)
 #define SOC_I2S_SUPPORTS_ETM            (1)
-#define SOC_I2S_SUPPORTS_XTAL           (1)
-#define SOC_I2S_SUPPORTS_PLL_F160M      (1)
-#define SOC_I2S_SUPPORTS_PLL_F120M      (1)
 #define SOC_I2S_SUPPORTS_PCM            (1)
 #define SOC_I2S_SUPPORTS_PDM            (1)
 #define SOC_I2S_SUPPORTS_PDM_TX         (1)     // Support to output raw PDM format data
@@ -257,8 +252,6 @@
 #define SOC_I2S_PDM_MAX_TX_LINES        (2)
 #define SOC_I2S_PDM_MAX_RX_LINES        (1U)
 #define SOC_I2S_SUPPORTS_TDM            (1)
-#define SOC_I2S_TDM_FULL_DATA_WIDTH     (1)     /*!< No limitation to data bit width when using multiple slots */
-#define SOC_I2S_SUPPORT_SLEEP_RETENTION (1)
 
 /*-------------------------- LEDC CAPS ---------------------------------------*/
 #define SOC_LEDC_SUPPORT_PLL_DIV_CLOCK      (1)
@@ -271,6 +264,7 @@
 #define SOC_LEDC_GAMMA_CURVE_FADE_RANGE_MAX (16)
 #define SOC_LEDC_FADE_PARAMS_BIT_WIDTH      (10)
 #define SOC_LEDC_SUPPORT_SLEEP_RETENTION    (1)
+#define SOC_LEDC_SUPPORT_ETM                (1)
 
 /*-------------------------- MMU CAPS ----------------------------------------*/
 #define SOC_MMU_PAGE_SIZE_CONFIGURABLE        (1)

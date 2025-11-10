@@ -32,7 +32,6 @@ else()
     list(APPEND srcs "crosscore_int.c"
             "esp_ipc.c"
             "esp_err.c"
-            "esp_system_console.c"
             "freertos_hooks.c"
             "int_wdt.c"
             "panic.c"
@@ -80,7 +79,10 @@ else()
                                     # [REFACTOR-TODO] Provide system hook to release dependency reversion.
                                     # IDF-13980
                                     esp_hal_i2c
-                                    esp_hal_timg # task_wdt_impl_timergroup.c relies on it
+                                    esp_hal_wdt
+                                    esp_hal_lcd
+                                    esp_hal_mcpwm
+                                    esp_hal_jpeg
                         LDFRAGMENTS "linker.lf" "app.lf")
     add_subdirectory(port)
 
@@ -129,8 +131,8 @@ target_link_libraries(${COMPONENT_LIB} INTERFACE "-u esp_system_include_startup_
 
 # [refactor-todo] requirements due to init code, should be removable
 # once link-time registration of component init functions is used.
-if(CONFIG_APPTRACE_ENABLE)
-    idf_component_optional_requires(PRIVATE app_trace)
+if(CONFIG_ESP_TRACE_ENABLE)
+    idf_component_optional_requires(PRIVATE esp_trace)
 endif()
 
 if(CONFIG_ESP_COREDUMP_ENABLE)
